@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard WebGIS Kependudukan</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <!-- Link ke file CSS -->
+   <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-gray-100 font-sans">
+     <!-- Navbar -->
+    <nav class="navbar">
+    <div class="logo">Dashboard Kependudukan Per Kelurahan di kecamatan Pauh, Kota Padang Tahun 2024</div>
+    <div class="menu-toggle" onclick="toggleMenu()">&#9776;</div>
+    <ul class="menu">
+        <li><a href="https:/daunbonteng.github.io/dashboard_peta_kependudukan_pauh/">Home</a></li>
+        <li><a href="https://syaraf13.github.io/project_peta_kependudukan/">See Fullscreen Map</a></li>
+        <li><a href="https://instagram.com/syaraf_al">Contact</a></li>
+    </ul>
+    </nav>
+    <!-- Main Content -->
+    <div class="container mx-auto mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Peta -->
+    <div class="bg-white p-4 shadow rounded">
+      <h2 class="text-lg font-semibold mb-4">Peta Interaktif</h2>
+      <iframe src="https://syaraf13.github.io/project_peta_kependudukan/" class="w-full h-80 border rounded" allowfullscreen></iframe>
+    </div>
+
+    <!-- Diagram -->
+    <div class="bg-white p-4 shadow rounded">
+        <h2 class="text-lg font-semibold mb-4">Diagram Infografis</h2>
+        <!-- <canvas id="chart" class="w-full h-80"></canvas> -->
+        <!-- <h2 style="text-align: center;">Total Suara Partai per Kabupaten/Kota</h2> -->
+        <canvas id="stackedBarChart" width="800" height="400"></canvas>
+    </div>
+
+    <script>
+        // Labels untuk sumbu X (Kabupaten/Kota)
+        const labels = ["Pisang", "Binuang Kampung Dalam", "Piai Tangah", "Cupak Tangah", "Kapalo Koto", "Koto Lua", "Lambung Bukit", "Limau Manis Selatan","Limau Manis"];
+    
+        // Data suara partai per kabupaten/kota
+        const dataPartai = {
+            "Laki-laki": [4568, 3177, 2391, 3595, 3280, 4649, 2164, 5453, 2997],
+            "Perempuan": [4718, 3021, 2341, 3584, 3264, 4782, 2054, 5220, 2953]
+        };
+    
+        // Warna khusus untuk setiap partai
+        const partaiColors = {
+            "Laki-laki": "red",
+            "Perempuan": "darkblue"
+        };
+    
+        // Menyiapkan dataset
+        const datasets = Object.keys(dataPartai).map(partai => ({
+            label: partai,
+            data: dataPartai[partai],
+            backgroundColor: partaiColors[partai],
+            borderColor: partaiColors[partai],
+            borderWidth: 1
+        }));
+    
+        // Membuat grafik
+        const ctx = document.getElementById('stackedBarChart').getContext('2d');
+        const stackedBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                },
+                scales: {
+                    x: {
+                        stacked: true // Mengaktifkan stack pada sumbu X
+                    },
+                    y: {
+                        stacked: true, // Mengaktifkan stack pada sumbu Y
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+  </div>
+
+<!-- Tabel -->
+<div class="container mx-auto mt-6 bg-white p-4 shadow rounded">
+    <h2 class="text-lg font-semibold mb-4">Data Tabel</h2>
+    <div class="overflow-y-auto h-80 border rounded"> <!-- Kontainer dengan scroll -->
+      <table class="table-auto w-full border">
+        <thead class="bg-white-200">
+         <tr>
+        <td class="px-4 py-2 border border-gray-300">Nomor</td>
+        <td class="px-4 py-2 border border-gray-300">Kelurahan</td>
+        <td class="px-4 py-2 border border-gray-300">Laki-Laki</td>
+        <td class="px-4 py-2 border border-gray-300">Perempuan</td>
+        <td class="px-4 py-2 border border-gray-300">Total</td>
+    </tr>
+    <tr>
+        <td class="px-4 py-2 border border-gray-300">1</td>
+        <td class="px-4 py-2 border border-gray-300">Pisang</td>
+        <td class="px-4 py-2 border border-gray-300">4568</td>
+        <td class="px-4 py-2 border border-gray-300">4718</td>
+        <td class="px-4 py-2 border border-gray-300">9286</td>
+    </tr>
+    <tr>
+        <td class="px-4 py-2 border border-gray-300">2</td>
+        <td class="px-4 py-2 border border-gray-300">Binuang Kampung Dalam</td>
+        <td class="px-4 py-2 border border-gray-300">3177</td>
+        <td class="px-4 py-2 border border-gray-300">3021</td>
+        <td class="px-4 py-2 border border-gray-300">6198</td>
+    </tr>
+    <tr>
+        <td class="px-4 py-2 border border-gray-300">3</td>
+        <td class="px-4 py-2 border border-gray-300">Piai Tangah</td>
+        <td class="px-4 py-2 border border-gray-300">2391</td>
+        <td class="px-4 py-2 border border-gray-300">2341</td>
+        <td class="px-4 py-2 border border-gray-300">4732</td>
+    </tr>
+    <tr>
+        <td class="px-4 py-2 border border-gray-300">4</td>
+        <td class="px-4 py-2 border border-gray-300">Cupak Tangah</td>
+        <td class="px-4 py-2 border border-gray-300">3595</td>
+        <td class="px-4 py-2 border border-gray-300">3584</td>
+        <td class="px-4 py-2 border border-gray-300">7179</td>
+    </tr>
+    <tr>
+        <td class="px-4 py-2 border border-gray-300">5</td>
+        <td class="px-4 py-2 border border-gray-300">Kapalo Koto</td>
+        <td class="px-4 py-2 border border-gray-300">3280</td>
+        <td class="px-4 py-2 border border-gray-300">3264</td>
+        <td class="px-4 py-2 border border-gray-300">6544</td>
+    </tr>
+    <tr>
+        <td class="px-4 py-2 border border-gray-300">6</td>
+        <td class="px-4 py-2 border border-gray-300">Koto Lua</td>
+        <td class="px-4 py-2 border border-gray-300">4649</td>
+        <td class="px-4 py-2 border border-gray-300">4782</td>
+        <td class="px-4 py-2 border border-gray-300">9431</td>
+    </tr>
+    <tr>
+        <td class="px-4 py-2 border border-gray-300">7</td>
+        <td class="px-4 py-2 border border-gray-300">Lambung Bukit</td>
+        <td class="px-4 py-2 border border-gray-300">2164</td>
+        <td class="px-4 py-2 border border-gray-300">2054</td>
+        <td class="px-4 py-2 border border-gray-300">4218</td>
+    </tr>
+    <tr>
+        <td class="px-4 py-2 border border-gray-300">8</td>
+        <td class="px-4 py-2 border border-gray-300">Limau Manis Selatan</td>
+        <td class="px-4 py-2 border border-gray-300">5453</td>
+        <td class="px-4 py-2 border border-gray-300">5220</td>
+        <td class="px-4 py-2 border border-gray-300">10673</td>
+    </tr>
+    <tr>
+        <td class="px-4 py-2 border border-gray-300">9</td>
+        <td class="px-4 py-2 border border-gray-300">Limau Manis</td>
+        <td class="px-4 py-2 border border-gray-300">2997</td>
+        <td class="px-4 py-2 border border-gray-300">2953</td>
+        <td class="px-4 py-2 border border-gray-300">5950</td>
+    </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+
+</body>
+</html>
